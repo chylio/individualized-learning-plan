@@ -47,55 +47,51 @@
   </div>
 
   <script>
-    // ✅ 這裡換成你部署後的 Apps Script Web App URL（已加上引號）
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbF8I5BveQSd_7k5AQ3UcnEXebo5txebnUOuHlHiB_nlN_me3OB7VzSeGfYyvnhUxg/exec";
+    // ✅ 已換成你的 Apps Script Web App URL
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1_Igcz9MdAir0dq5AzgtcbQT67fUChIWdNV53RQytg_VSdzVYn8Xm-_DEKLgtk8v9/exec";
 
-    // 全域變數儲存登入者資訊
-    let currentUserId = '';
-    let currentRole = '';
-    let currentUserName = ''; // 如果之後需要姓名欄位可補
+    let currentUser = {};
 
     function login(){
       console.log("✅ login() 被執行");
       const userId = document.getElementById("userId").value;
       const role = document.getElementById("role").value;
-      // 儲存到全域變數
-      currentUserId = userId;
-      currentRole = role;
 
       if(!userId){
         alert("請輸入人事號");
         return;
       }
 
-      // 模擬登入：切換畫面
+      currentUser = { userId, role, name: (role === "student" ? "王小明" : "老師") };
+
+      // 切換畫面
       document.getElementById("loginContainer").style.display = "none";
       document.getElementById("mainContainer").style.display = "block";
 
       if(role === "student"){
-        renderStudentUI(userId);
+        renderStudentUI();
       } else {
-        renderTeacherUI(userId);
+        renderTeacherUI();
       }
     }
 
-    // 學生模式畫面
-    function renderStudentUI(userId){
+    // ✅ 學生模式 UI
+    function renderStudentUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
         <div class="section">
-          <label>學習目標(你想學什麼?)</label>
-          <textarea id="goal" rows="2" placeholder="e.g.提升急診處理能力，特別是心肺復甦術（CPR）和創傷處理技能"></textarea>
-          <label>學習動機(什麼事件誘發你想要學這個?) </label>
-          <textarea id="motivation" rows="2" placeholder="e.g.發現自己在應對突發情況時經驗不足，感到需要加強這方面的能力。"></textarea>
-          <label>策略(你需要做什麼?) </label>
-          <textarea id="strategy" rows="2" placeholder="e.g.在急診科訓練期間主動參與處理急診病例，或利用模擬設備進行反覆練習。"></textarea>
-          <label>可能困難 </label>
-          <textarea id="difficulty" rows="2" placeholder="e.g.課程安排與臨床時間衝突或實際操作機會有限。"></textarea>
-          <label>評估內容與指標(怎麼樣才能證明你有達到你的學習目標?)</label>
-          <textarea id="evaluation" rows="2" placeholder="e.g.通過心肺復甦術培訓考核並獲得證書或獨立完成心肺復甦術和創傷處理。"></textarea>
-          <label>預計時程： (這部分的學習預計多久達成?) </label>
-          <textarea id="timeline" rows="2" placeholder="e.g.預計三個月內完成上述學習目標。"></textarea>
+          <label>學習目標</label>
+          <textarea id="goal" rows="2" placeholder="請輸入你的學習目標..."></textarea>
+          <label>學習動機</label>
+          <textarea id="motivation" rows="2" placeholder="說明你的動機..."></textarea>
+          <label>策略</label>
+          <textarea id="strategy" rows="2" placeholder="你打算怎麼做？"></textarea>
+          <label>可能困難</label>
+          <textarea id="difficulty" rows="2" placeholder="預測可能遇到的挑戰..."></textarea>
+          <label>評估方式</label>
+          <textarea id="evaluation" rows="2" placeholder="你如何評估成果？"></textarea>
+          <label>時程</label>
+          <textarea id="timeline" rows="2" placeholder="預計完成的時間..."></textarea>
           <button class="action-btn" onclick="saveToGoogleSheet()">送出並產生AI計畫</button>
         </div>
       `;
@@ -117,8 +113,8 @@
       `;
     }
 
-    // 老師模式畫面
-    function renderTeacherUI(userId){
+    // ✅ 老師模式 UI
+    function renderTeacherUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>老師回饋區</h2>
         <div class="section">
@@ -153,7 +149,7 @@
         <div class="section">
           <h3>學生ILP</h3>
           <p>目標：精進臨床溝通技巧</p>
-          <p>動機：希望能與病人建立更好的關係</p>
+          <p>動機：希望能與病患建立更好的關係</p>
         </div>
         <div class="section">
           <h3>AI 計畫 & 差異回饋</h3>
@@ -168,12 +164,12 @@
       `;
     }
 
-    // 修正後送出功能
+    // ✅ 學生送出資料 → Google Sheet
     function saveToGoogleSheet(){
       const payload = {
-        userId: currentUserId, // 用全域變數取得
-        name: currentUserName || "", // 如果之後要加姓名欄可用
-        role: currentRole,
+        userId: currentUser.userId,
+        name: currentUser.name,
+        role: currentUser.role,
         version: 1,
         goal: document.getElementById("goal").value,
         motivation: document.getElementById("motivation").value,
@@ -199,7 +195,10 @@
           alert("❌ 發生錯誤：" + res.message);
         }
       })
-      .catch(err => console.error("❌ 錯誤", err));
+      .catch(err => {
+        console.error("❌ 錯誤", err);
+        alert("❌ 送出失敗：" + err);
+      });
     }
   </script>
 </body>
