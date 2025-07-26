@@ -50,10 +50,18 @@
     // ✅ 這裡換成你部署後的 Apps Script Web App URL（已加上引號）
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbF8I5BveQSd_7k5AQ3UcnEXebo5txebnUOuHlHiB_nlN_me3OB7VzSeGfYyvnhUxg/exec";
 
+    // 全域變數儲存登入者資訊
+    let currentUserId = '';
+    let currentRole = '';
+    let currentUserName = ''; // 如果之後需要姓名欄位可補
+
     function login(){
-      console.log("✅ login() 被執行"); // Debug log
+      console.log("✅ login() 被執行");
       const userId = document.getElementById("userId").value;
       const role = document.getElementById("role").value;
+      // 儲存到全域變數
+      currentUserId = userId;
+      currentRole = role;
 
       if(!userId){
         alert("請輸入人事號");
@@ -71,7 +79,7 @@
       }
     }
 
-    // ✅ 學生模式畫面（左邊填表，右邊顯示AI計畫 & 教師回饋）
+    // 學生模式畫面
     function renderStudentUI(userId){
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
@@ -109,7 +117,7 @@
       `;
     }
 
-    // ✅ 老師模式畫面（之後要補回饋）
+    // 老師模式畫面
     function renderTeacherUI(userId){
       document.getElementById("sidebar").innerHTML = `
         <h2>老師回饋區</h2>
@@ -160,12 +168,12 @@
       `;
     }
 
-    // ✅ 修正後送出功能
+    // 修正後送出功能
     function saveToGoogleSheet(){
       const payload = {
-        userId: "S1234",            // 目前先用假資料，之後可從登入帶入
-        name: "王小明",
-        role: "student",
+        userId: currentUserId, // 用全域變數取得
+        name: currentUserName || "", // 如果之後要加姓名欄可用
+        role: currentRole,
         version: 1,
         goal: document.getElementById("goal").value,
         motivation: document.getElementById("motivation").value,
