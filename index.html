@@ -1,0 +1,287 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美醫院個人化學習計畫書 - 表單</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font import for Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-start min-h-screen p-4 sm:p-6 md:p-8 text-gray-800">
+    <div class="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-lg max-w-4xl w-full box-border mt-8 mb-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-center text-blue-800 mb-2">奇美醫學財團法人奇美醫院</h1>
+        <h2 class="text-xl sm:text-2xl font-semibold text-center text-blue-600 mb-8">個人化學習計畫書 (ILPs)</h2>
+
+        <form id="learningPlanForm" class="space-y-6">
+            <!-- 基本資訊區塊 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="col-span-1">
+                    <label for="studentName" class="block text-sm font-medium text-gray-700 mb-1">姓名:</label>
+                    <input type="text" id="studentName" name="studentName" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div class="col-span-1 flex items-center pt-6">
+                    <label class="text-sm font-medium text-gray-700 mr-3">性別:</label>
+                    <div class="flex items-center space-x-4">
+                        <input type="radio" id="genderMale" name="gender" value="男" required
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                        <label for="genderMale" class="text-sm font-medium text-gray-700">男</label>
+                        <input type="radio" id="genderFemale" name="gender" value="女" required
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                        <label for="genderFemale" class="text-sm font-medium text-gray-700">女</label>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <label for="position" class="block text-sm font-medium text-gray-700 mb-1">職級:</label>
+                    <input type="text" id="position" name="position" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div class="col-span-1">
+                    <label for="fillDate" class="block text-sm font-medium text-gray-700 mb-1">填寫日期:</label>
+                    <input type="date" id="fillDate" name="fillDate" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            <!-- 學習目標 -->
+            <div>
+                <label for="learningGoal" class="block text-sm font-medium text-gray-700 mb-1">學習目標:</label>
+                <textarea id="learningGoal" name="learningGoal" rows="3" placeholder="(你想學什麼?)" required
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+            </div>
+
+            <!-- 學習動機 -->
+            <div>
+                <label for="motivation" class="block text-sm font-medium text-gray-700 mb-1">學習動機:</label>
+                <textarea id="motivation" name="motivation" rows="3" placeholder="(什麼事件誘發你想要學這個?)" required
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+            </div>
+
+            <!-- 策略與資源 / 困難 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="strategyResource" class="block text-sm font-medium text-gray-700 mb-1">學習策略與資源:</label>
+                    <textarea id="strategyResource" name="strategyResource" rows="5" placeholder="(你需要做什麼?需要誰的幫忙或什麼設備?)" required
+                              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+                </div>
+                <div>
+                    <label for="difficulties" class="block text-sm font-medium text-gray-700 mb-1">可能遭遇的困難:</label>
+                    <textarea id="difficulties" name="difficulties" rows="5" placeholder="" required
+                              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+                </div>
+            </div>
+
+            <!-- 評估內容與指標 -->
+            <div>
+                <label for="evaluationCriteria" class="block text-sm font-medium text-gray-700 mb-1">評估內容與指標:</label>
+                <textarea id="evaluationCriteria" name="evaluationCriteria" rows="3" placeholder="(怎麼樣才能證明你達到你的學習目標?)" required
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+            </div>
+
+            <!-- 預計時程 -->
+            <div>
+                <label for="estimatedTime" class="block text-sm font-medium text-gray-700 mb-1">預計時程:</label>
+                <textarea id="estimatedTime" name="estimatedTime" rows="2" placeholder="(這部分的學習預計多久達成?)" required
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-y"></textarea>
+            </div>
+
+            <!-- 教師回饋相關欄位設為只讀，由 AI 或後續人工填寫 -->
+            <div>
+                <label for="teacherFeedback" class="block text-sm font-medium text-gray-700 mb-1">教師回饋內容:</label>
+                <textarea id="teacherFeedback" name="teacherFeedback" rows="5" readonly
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 shadow-sm sm:text-sm cursor-not-allowed"></textarea>
+            </div>
+
+            <!-- 回饋教師姓名 / 建議追蹤日期 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="feedbackTeacherName" class="block text-sm font-medium text-gray-700 mb-1">回饋教師姓名:</label>
+                    <input type="text" id="feedbackTeacherName" name="feedbackTeacherName" readonly
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 shadow-sm sm:text-sm cursor-not-allowed">
+                </div>
+                <div>
+                    <label for="suggestedFollowUpDate" class="block text-sm font-medium text-gray-700 mb-1">建議追蹤日期:</label>
+                    <input type="date" id="suggestedFollowUpDate" name="suggestedFollowUpDate" readonly
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 shadow-sm sm:text-sm cursor-not-allowed">
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full py-3 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                送出學習計畫並生成
+            </button>
+            <p id="message" class="text-center mt-4 text-lg font-semibold text-gray-600"></p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('learningPlanForm');
+            const messageDiv = document.getElementById('message');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // 阻止表單默認提交行為
+
+                messageDiv.textContent = '正在提交資料並生成學習計畫...請稍候...';
+                messageDiv.classList.remove('text-green-600', 'text-red-600');
+                messageDiv.classList.add('text-blue-600');
+
+                // 收集表單數據
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // 處理 radio button，確保只取選中的值
+                const genderRadios = document.querySelectorAll('input[name="gender"]:checked');
+                if (genderRadios.length > 0) {
+                    data.gender = genderRadios[0].value;
+                } else {
+                    data.gender = ''; // 如果沒有選中，則為空
+                }
+
+                // 後端 API 的 URL
+                // 在本地開發時是 http://127.0.0.1:5000
+                // 部署到 Cloud Run 後，會是你的 Cloud Run 服務的 URL
+                const backendUrl = 'http://127.0.0.1:5000/submit-plan'; // *** 請在部署後替換為你的 Cloud Run 服務 URL ***
+
+                try {
+                    const response = await fetch(backendUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        messageDiv.textContent = result.message;
+                        messageDiv.classList.remove('text-blue-600', 'text-red-600');
+                        messageDiv.classList.add('text-green-600');
+                        console.log('提交成功:', result);
+
+                        // 將 AI 生成的學習計畫儲存到 localStorage，以便在另一個頁面顯示
+                        localStorage.setItem('aiLearningPlanContent', result.aiLearningPlan);
+                        localStorage.setItem('studentNameForPlan', data.studentName); // 儲存學生姓名用於標題
+
+                        // 導向到顯示學習計畫的頁面
+                        window.location.href = 'plan_output.html';
+
+                    } else {
+                        messageDiv.textContent = `提交失敗: ${result.message || '未知錯誤'}`;
+                        messageDiv.classList.remove('text-blue-600', 'text-green-600');
+                        messageDiv.classList.add('text-red-600');
+                        console.error('提交失敗:', result);
+                    }
+                } catch (error) {
+                    messageDiv.textContent = `網路錯誤或伺服器無響應: ${error.message}`;
+                    messageDiv.classList.remove('text-blue-600', 'text-green-600');
+                    messageDiv.classList.add('text-red-600');
+                    console.error('Fetch error:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!-- frontend/plan_output.html -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人化學習計畫</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Markdown 渲染器 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
+    <style>
+        /* Custom font import for Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for Markdown rendered content */
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            @apply font-bold text-gray-900 mt-6 mb-3;
+        }
+        .markdown-content h1 { @apply text-3xl sm:text-4xl border-b-2 pb-2 border-blue-200 text-blue-800; }
+        .markdown-content h2 { @apply text-2xl sm:text-3xl border-b pb-1 border-blue-100 text-blue-700; }
+        .markdown-content h3 { @apply text-xl sm:text-2xl text-green-700; }
+        .markdown-content h4 { @apply text-lg sm:text-xl text-purple-700; }
+        .markdown-content p { @apply mb-4 leading-relaxed; }
+        .markdown-content ul { @apply list-disc pl-5 mb-4; }
+        .markdown-content ol { @apply list-decimal pl-5 mb-4; }
+        .markdown-content li { @apply mb-2; }
+        .markdown-content table {
+            @apply w-full border-collapse my-4;
+        }
+        .markdown-content th, .markdown-content td {
+            @apply border border-gray-300 p-3 text-left;
+        }
+        .markdown-content th {
+            @apply bg-gray-100 font-semibold text-gray-700;
+        }
+        .markdown-content pre {
+            @apply bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm font-mono my-4;
+        }
+        .markdown-content code {
+            @apply bg-gray-100 px-1 py-0.5 rounded text-red-600 text-sm;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex justify-center p-4 sm:p-6 md:p-8 box-border text-gray-800">
+    <div class="bg-white p-6 sm:p-8 md:p-12 rounded-xl shadow-2xl max-w-5xl w-full box-border mt-8 mb-8">
+        <header class="text-center mb-8 border-b-2 pb-6 border-blue-100">
+            <h1 id="planTitle" class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-2">個人化學習計畫</h1>
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-600 mt-2">臨床醫學學習計畫</h2>
+        </header>
+        <div id="aiPlanContent" class="markdown-content">
+            <!-- AI 生成的 Markdown 內容將渲染在這裡 -->
+            <p class="text-center text-gray-500 text-lg">正在載入學習計畫...</p>
+        </div>
+        <a href="index.html" 
+           class="block w-full sm:w-64 mx-auto mt-10 py-3 px-4 bg-gray-600 text-white font-semibold text-center rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-1">
+            返回表單
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiMarkdown = localStorage.getItem('aiLearningPlanContent');
+            const studentName = localStorage.getItem('studentNameForPlan');
+            const planContentDiv = document.getElementById('aiPlanContent');
+            const planTitle = document.getElementById('planTitle');
+
+            if (studentName) {
+                planTitle.textContent = `${studentName} 個人化學習`;
+            } else {
+                planTitle.textContent = '個人化學習計畫';
+            }
+
+            if (aiMarkdown) {
+                // 使用 marked.js 將 Markdown 轉換為 HTML
+                planContentDiv.innerHTML = marked.parse(aiMarkdown);
+            } else {
+                planContentDiv.innerHTML = "<p class='text-center text-red-600 text-lg'>未能載入學習計畫內容。請返回表單重新提交。</p>";
+            }
+
+            // 清除 localStorage 中的數據，避免下次直接打開時顯示舊數據
+            localStorage.removeItem('aiLearningPlanContent');
+            localStorage.removeItem('studentNameForPlan');
+        });
+    </script>
+</body>
+</html>
