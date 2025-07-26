@@ -47,13 +47,11 @@
   </div>
 
   <script>
-    // ✅ 已換成你的 Apps Script Web App URL
+    // 指定你的 Apps Script Web App 的 URL
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywma1inl4zUQgJ7jbaa6-nDSesBpFjXyLkyaT4HwVA5SjhFoRYbrV9qlMBw-vMXCYQ/exec";
-
     let currentUser = {};
 
     function login(){
-      console.log("✅ login() 被執行");
       const userId = document.getElementById("userId").value;
       const role = document.getElementById("role").value;
 
@@ -64,7 +62,6 @@
 
       currentUser = { userId, role, name: (role === "student" ? "王小明" : "老師") };
 
-      // 切換畫面
       document.getElementById("loginContainer").style.display = "none";
       document.getElementById("mainContainer").style.display = "block";
 
@@ -75,7 +72,7 @@
       }
     }
 
-    // ✅ 學生模式 UI
+    // 學生模式 UI
     function renderStudentUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
@@ -113,7 +110,7 @@
       `;
     }
 
-    // ✅ 老師模式 UI
+    // 老師模式 UI
     function renderTeacherUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>老師回饋區</h2>
@@ -164,7 +161,7 @@
       `;
     }
 
-    // ✅ 學生送出資料 → Google Sheet
+    // 學生送出資料 → Google Sheet
     function saveToGoogleSheet(){
       const payload = {
         userId: currentUser.userId,
@@ -186,7 +183,6 @@
       })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if(res.status === "success"){
           alert("✅ 已送出並寫入 Google Sheet！");
           document.getElementById("aiPlan").innerText = "（之後會在這裡顯示AI計畫）";
@@ -196,7 +192,6 @@
         }
       })
       .catch(err => {
-        console.error("❌ 錯誤", err);
         alert("❌ 送出失敗：" + err);
       });
     }
