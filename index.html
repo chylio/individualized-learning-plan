@@ -47,7 +47,7 @@
   </div>
 
   <script>
-    // 指定你的 Apps Script Web App 的 URL（已更新為你最新的網址）
+    // Google Apps Script Web App 的 URL，請用你部署的網址
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAx5JAY1L98PetzHfFdZ_2FPelGCKY6aVn0GLGTzIqNhUDWewZgB7kM2izOwo23wKU/exec";
     let currentUser = {};
 
@@ -72,7 +72,6 @@
       }
     }
 
-    // 學生模式 UI
     function renderStudentUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
@@ -110,7 +109,6 @@
       `;
     }
 
-    // 老師模式 UI
     function renderTeacherUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>老師回饋區</h2>
