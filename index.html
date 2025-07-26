@@ -84,18 +84,18 @@
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
         <div class="section">
-          <label>學習目標</label>
-          <textarea id="goal" rows="2" placeholder="請輸入你的學習目標..."></textarea>
-          <label>學習動機</label>
-          <textarea id="motivation" rows="2" placeholder="說明你的動機..."></textarea>
-          <label>策略</label>
-          <textarea id="strategy" rows="2" placeholder="你打算怎麼做？"></textarea>
-          <label>可能困難</label>
-          <textarea id="difficulty" rows="2" placeholder="預測可能遇到的挑戰..."></textarea>
-          <label>評估方式</label>
-          <textarea id="evaluation" rows="2" placeholder="你如何評估成果？"></textarea>
-          <label>時程</label>
-          <textarea id="timeline" rows="2" placeholder="預計完成的時間..."></textarea>
+          <label>學習目標(你想學什麼?)</label>
+          <textarea id="goal" rows="2" placeholder="e.g.提升急診處理能力，特別是心肺復甦術（CPR）和創傷處理技能"></textarea>
+          <label>學習動機(什麼事件誘發你想要學這個?) </label>
+          <textarea id="motivation" rows="2" placeholder="e.g.發現自己在應對突發情況時經驗不足，感到需要加強這方面的能力。"></textarea>
+          <label>策略(你需要做什麼?) </label>
+          <textarea id="strategy" rows="2" placeholder="e.g.在急診科訓練期間主動參與處理急診病例，或利用模擬設備進行反覆練習。"></textarea>
+          <label>可能困難 </label>
+          <textarea id="difficulty" rows="2" placeholder="e.g.課程安排與臨床時間衝突或實際操作機會有限。"></textarea>
+          <label>評估內容與指標(怎麼樣才能證明你有達到你的學習目標?)</label>
+          <textarea id="evaluation" rows="2" placeholder="e.g.通過心肺復甦術培訓考核並獲得證書或獨立完成心肺復甦術和創傷處理。"></textarea>
+          <label>預計時程： (這部分的學習預計多久達成?) </label>
+          <textarea id="timeline" rows="2" placeholder="e.g.預計三個月內完成上述學習目標。"></textarea>
           <button class="action-btn" onclick="saveToGoogleSheet()">送出並產生AI計畫</button>
         </div>
       `;
