@@ -4,86 +4,206 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ILP 學習計畫系統</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --main: #2e61e6;
+      --accent: #46c1b5;
+      --bg: #f5f7fa;
+      --card: #fff;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(46,97,230,0.08);
+    }
     body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0;
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      background: linear-gradient(120deg, #f5f7fa 60%, #e9fcf7 100%);
+      margin: 0; padding: 0; min-height: 100vh;
+      color: #263a53;
     }
     .login-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
     }
     .login-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
+      background: var(--card);
+      padding: 36px 32px 28px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 320px;
       text-align: center;
+      position: relative;
+    }
+    .login-box h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-weight: 700;
+      color: var(--main);
+      letter-spacing: 1px;
     }
     .login-box input, .login-box select, .login-box button {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
+      padding: 13px;
+      margin-top: 12px;
+      font-size: 17px;
+      border-radius: 8px;
+      border: 1.5px solid #e4e8f3;
+      background: #f7faff;
+      box-sizing: border-box;
+      transition: border .2s;
+    }
+    .login-box input:focus, .login-box select:focus {
+      border-color: var(--main);
+      outline: none;
+    }
+    .login-box button {
+      background: linear-gradient(90deg, var(--main), var(--accent));
+      color: white;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1em;
+      margin-top: 24px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(46,97,230,0.10);
+      transition: background .2s, box-shadow .2s;
+    }
+    .login-box button:hover {
+      background: linear-gradient(90deg, var(--accent), var(--main));
+      box-shadow: 0 4px 18px rgba(46,193,181,0.13);
     }
     .main-container {
       display: none;
       height: 100vh;
     }
-    .sidebar, .content {
-      padding: 20px;
-      overflow-y: auto;
-    }
-    .sidebar {
-      width: 40%;
-      background: #ffffff;
-      border-right: 2px solid #ccc;
-    }
-    .content {
-      width: 60%;
-      background: #fdfdfd;
-    }
     .layout {
       display: flex;
       height: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sidebar, .content {
+      padding: 32px 28px;
+      overflow-y: auto;
+    }
+    .sidebar {
+      width: 38%;
+      background: linear-gradient(120deg, #f8fbff 80%, #e9fcf7 100%);
+      border-right: 1.5px solid #e4e8f3;
+    }
+    .content {
+      width: 62%;
+      background: #fdfdfd;
     }
     h2 {
       margin-top: 0;
+      color: var(--main);
+      font-weight: 700;
+      letter-spacing: 1px;
     }
     .section {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      background: var(--card);
+      padding: 20px 22px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(46,97,230,0.06);
+      position: relative;
+      transition: box-shadow .2s;
+    }
+    .section:hover {
+      box-shadow: 0 6px 24px rgba(46,97,230,0.11);
+    }
+    .section label {
+      font-weight: 500;
+      margin-top: 12px;
+      display: block;
+      color: #3757b0;
+      font-size: 1em;
+      letter-spacing: .5px;
     }
     textarea, input[type="text"] {
       width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      box-sizing: border-box;
+      margin-top: 6px;
+      padding: 11px;
+      border-radius: 8px;
+      border: 1.5px solid #e4e8f3;
       font-family: inherit;
+      background: #f6faff;
+      box-sizing: border-box;
+      font-size: 16px;
+      resize: vertical;
+      transition: border .2s;
+    }
+    textarea:focus, input[type="text"]:focus {
+      border-color: var(--accent);
+      outline: none;
     }
     button {
-      padding: 10px 15px;
-      background: #1a73e8;
+      padding: 12px 0;
+      background: linear-gradient(90deg, var(--main), var(--accent));
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      width: 100%;
+      margin-top: 18px;
+      font-size: 1.1em;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(46,193,181,0.10);
+      transition: background .2s, box-shadow .2s;
     }
     button:hover {
-      background: #1558b0;
+      background: linear-gradient(90deg, var(--accent), var(--main));
+      box-shadow: 0 4px 15px rgba(46,193,181,0.12);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul li {
+      margin-bottom: 13px;
+    }
+    ul li button {
+      width: 100%;
+      background: #f7faff;
+      color: var(--main);
+      border: 1.5px solid var(--accent);
+      margin: 0;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background .2s, border .2s;
+      box-shadow: 0 1px 7px rgba(46,193,181,0.07);
+    }
+    ul li button:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--main);
+    }
+    .section h3 {
+      color: var(--accent);
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 1.1em;
+      letter-spacing: .5px;
+    }
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; box-shadow: none; border-radius: 0;}
+      .sidebar, .content { width: 100%; padding: 18px 6vw;}
+    }
+    @media (max-width: 600px) {
+      .sidebar, .content { padding: 14px 4vw;}
+      .login-box { padding: 20px 8px;}
     }
   </style>
 </head>
 <body>
-
   <!-- 登入畫面 -->
   <div class="login-container" id="loginContainer">
     <div class="login-box">
@@ -96,18 +216,15 @@
       <button onclick="login()">登入</button>
     </div>
   </div>
-
   <!-- 主系統畫面 -->
   <div class="main-container" id="mainContainer">
     <div class="layout">
       <!-- 左邊欄位 -->
       <div class="sidebar" id="sidebar"></div>
-
       <!-- 右邊欄位 -->
       <div class="content" id="content"></div>
     </div>
   </div>
-
   <script>
     function login(){
       const userId = document.getElementById("userId").value;
@@ -134,34 +251,33 @@
         <h2>學生填寫區</h2>
         <div class="section">
           <label>學習目標</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="請輸入你的學習目標..."></textarea>
           <label>學習動機</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="說明你的動機..."></textarea>
           <label>策略</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="你打算怎麼做？"></textarea>
           <label>可能困難</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="預測可能遇到的挑戰..."></textarea>
           <label>評估方式</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="你如何評估成果？"></textarea>
           <label>時程</label>
-          <textarea rows="2"></textarea>
+          <textarea rows="2" placeholder="預計完成的時間..."></textarea>
           <button>送出並產生AI計畫</button>
         </div>
       `;
-
       document.getElementById("content").innerHTML = `
         <h2>AI 計畫 & 教師回饋</h2>
         <div class="section">
           <h3>本次 AI 生成計畫書</h3>
-          <p>(送出後這裡會顯示AI計畫)</p>
+          <p style="color:#888">(送出後這裡會顯示AI計畫)</p>
         </div>
         <div class="section">
           <h3>AI 比較回饋</h3>
-          <p>(AI會分析上次與本次差異，送出後顯示)</p>
+          <p style="color:#888">(AI會分析上次與本次差異，送出後顯示)</p>
         </div>
         <div class="section">
           <h3>教師回饋</h3>
-          <p>(老師補回饋後，這裡會顯示內容)</p>
+          <p style="color:#888">(老師補回饋後，這裡會顯示內容)</p>
         </div>
       `;
     }
@@ -177,20 +293,19 @@
           </ul>
         </div>
       `;
-
       document.getElementById("content").innerHTML = `
         <h2>學生ILP & AI計畫</h2>
         <div class="section">
           <h3>學生ILP</h3>
-          <p>請選擇學生後顯示</p>
+          <p style="color:#888">請選擇學生後顯示</p>
         </div>
         <div class="section">
           <h3>AI 計畫 & 差異回饋</h3>
-          <p>請選擇學生後顯示</p>
+          <p style="color:#888">請選擇學生後顯示</p>
         </div>
         <div class="section">
           <h3>老師回饋</h3>
-          <textarea rows="3" placeholder="輸入你的回饋"></textarea>
+          <textarea rows="3" placeholder="輸入你的回饋..."></textarea>
           <button>送出回饋</button>
         </div>
       `;
@@ -212,12 +327,11 @@
         </div>
         <div class="section">
           <h3>老師回饋</h3>
-          <textarea rows="3" placeholder="輸入你的回饋"></textarea>
+          <textarea rows="3" placeholder="輸入你的回饋..."></textarea>
           <button>送出回饋</button>
         </div>
       `;
     }
   </script>
-
 </body>
 </html>
