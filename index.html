@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ILP 學習計畫系統</title>
+  <title>ILP 學習計畫系統（AI自動生成）</title>
   <style>
     body { font-family: "Microsoft JhengHei", sans-serif; background: #f5f7fa; margin: 0; }
     .login-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
@@ -20,6 +20,7 @@
     .section { background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-top: 5px; font-family: inherit; }
     button.action-btn { padding: 10px; width: 100%; margin-top: 15px; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .ai-output { color: #1a73e8; background: #eef4fc; border-radius: 8px; padding: 10px; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -47,7 +48,7 @@
   </div>
 
   <script>
-    // Google Apps Script Web App 的 URL，請用你部署的網址
+    // Google Apps Script Web App 的 URL
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAx5JAY1L98PetzHfFdZ_2FPelGCKY6aVn0GLGTzIqNhUDWewZgB7kM2izOwo23wKU/exec";
     let currentUser = {};
 
@@ -72,6 +73,7 @@
       }
     }
 
+    // 學生模式 UI
     function renderStudentUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>學生填寫區</h2>
@@ -96,19 +98,20 @@
         <h2>AI 計畫 & 教師回饋</h2>
         <div class="section">
           <h3>本次 AI 生成計畫書</h3>
-          <p id="aiPlan" style="color:#888">(送出後這裡會顯示AI計畫)</p>
+          <div id="aiPlan" class="ai-output">(送出後這裡會顯示AI計畫)</div>
         </div>
         <div class="section">
           <h3>AI 差異回饋</h3>
-          <p id="aiDiff" style="color:#888">(AI會分析上次與本次差異，送出後顯示)</p>
+          <div id="aiDiff" class="ai-output">(AI會分析上次與本次差異，送出後顯示)</div>
         </div>
         <div class="section">
           <h3>教師回饋</h3>
-          <p id="teacherFeedback" style="color:#888">(老師補回饋後，這裡會顯示內容)</p>
+          <div id="teacherFeedback" class="ai-output">(老師補回饋後，這裡會顯示內容)</div>
         </div>
       `;
     }
 
+    // 老師模式 UI
     function renderTeacherUI(){
       document.getElementById("sidebar").innerHTML = `
         <h2>老師回饋區</h2>
@@ -124,11 +127,11 @@
         <h2>學生ILP & AI計畫</h2>
         <div class="section">
           <h3>學生ILP</h3>
-          <p style="color:#888">請選擇學生後顯示</p>
+          <div style="color:#888">請選擇學生後顯示</div>
         </div>
         <div class="section">
           <h3>AI 計畫 & 差異回饋</h3>
-          <p style="color:#888">請選擇學生後顯示</p>
+          <div style="color:#888">請選擇學生後顯示</div>
         </div>
         <div class="section">
           <h3>老師回饋</h3>
@@ -159,7 +162,7 @@
       `;
     }
 
-    // 學生送出資料 → Google Sheet
+    // 學生送出資料 → Google Sheet + 產生AI計畫
     function saveToGoogleSheet(){
       const payload = {
         userId: currentUser.userId,
@@ -173,8 +176,11 @@
         evaluation: document.getElementById("evaluation").value,
         timeline: document.getElementById("timeline").value
       };
-      // 轉成 x-www-form-urlencoded 格式
       const params = new URLSearchParams(payload).toString();
+
+      // 清空AI回饋欄
+      document.getElementById("aiPlan").innerText = "AI計畫生成中...";
+      document.getElementById("aiDiff").innerText = "AI差異分析中...";
 
       fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
@@ -184,14 +190,16 @@
       .then(res => res.json())
       .then(res => {
         if(res.status === "success"){
+          document.getElementById("aiPlan").innerText = res.aiPlan || "（AI回覆失敗）";
+          document.getElementById("aiDiff").innerText = res.aiDiff || "（無差異分析）";
           alert("✅ 已送出並寫入 Google Sheet！");
-          document.getElementById("aiPlan").innerText = "（之後會在這裡顯示AI計畫）";
-          document.getElementById("aiDiff").innerText = "（之後會在這裡顯示AI差異回饋）";
         } else {
           alert("❌ 發生錯誤：" + res.message);
         }
       })
       .catch(err => {
+        document.getElementById("aiPlan").innerText = "AI計畫生成失敗";
+        document.getElementById("aiDiff").innerText = "AI差異分析失敗";
         alert("❌ 送出失敗：" + err);
       });
     }
