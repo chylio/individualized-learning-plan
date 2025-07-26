@@ -3,135 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>個人化學習計畫表 (ILP)</title>
+  <title>ILP 學習計畫系統</title>
   <style>
     body {
       font-family: "Microsoft JhengHei", sans-serif;
       background: #f5f7fa;
-      padding: 20px;
-      line-height: 1.6;
+      margin: 0;
+      padding: 0;
     }
-    h1 {
-      text-align: center;
-      color: #1a3c6e;
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    form {
-      max-width: 700px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
+    .login-box {
+      background: #fff;
+      padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
     }
-    label {
-      font-weight: bold;
-      margin-top: 15px;
-      display: block;
-    }
-    input, textarea {
+    .login-box input, .login-box select, .login-box button {
       width: 100%;
       padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .main-container {
+      display: none;
+      height: 100vh;
+    }
+    .sidebar, .content {
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .sidebar {
+      width: 40%;
+      background: #ffffff;
+      border-right: 2px solid #ccc;
+    }
+    .content {
+      width: 60%;
+      background: #fdfdfd;
+    }
+    .layout {
+      display: flex;
+      height: 100%;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .section {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    textarea, input[type="text"] {
+      width: 100%;
       margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      padding: 8px;
       box-sizing: border-box;
-      font-size: 15px;
+      font-family: inherit;
     }
     button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
+      padding: 10px 15px;
       background: #1a73e8;
       color: white;
-      font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
     }
     button:hover {
       background: #1558b0;
     }
-    .result-box {
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 20px;
-      background: #fffbe6;
-      border: 1px solid #ffe58f;
-      border-radius: 8px;
-      display: none;
-    }
   </style>
 </head>
 <body>
-  <h1>個人化學習計畫表 (ILP)</h1>
-  <form id="ilpForm">
-    <label>姓名</label>
-    <input type="text" name="name" required>
 
-    <label>學習目標（你想學什麼？）</label>
-    <textarea name="goal" rows="2" required></textarea>
+  <!-- 登入畫面 -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-box">
+      <h2>登入 ILP 系統</h2>
+      <input type="text" id="userId" placeholder="請輸入人事號">
+      <select id="role">
+        <option value="student">學生</option>
+        <option value="teacher">老師</option>
+      </select>
+      <button onclick="login()">登入</button>
+    </div>
+  </div>
 
-    <label>學習動機（為什麼想學？）</label>
-    <textarea name="motivation" rows="2" required></textarea>
+  <!-- 主系統畫面 -->
+  <div class="main-container" id="mainContainer">
+    <div class="layout">
+      <!-- 左邊欄位 -->
+      <div class="sidebar" id="sidebar"></div>
 
-    <label>學習策略與資源（需要什麼協助或準備？）</label>
-    <textarea name="strategy" rows="2"></textarea>
-
-    <label>可能遇到的困難</label>
-    <textarea name="difficulty" rows="2"></textarea>
-
-    <label>評估方式與指標（怎麼判斷有達到目標？）</label>
-    <textarea name="evaluation" rows="2"></textarea>
-
-    <label>預計完成時間</label>
-    <input type="text" name="timeline" placeholder="例如：3個月內">
-
-    <button type="submit">送出</button>
-  </form>
-
-  <div class="result-box" id="resultBox">
-    <h2>✅ 你的學習計畫表</h2>
-    <div id="aiResult">請稍候...</div>
+      <!-- 右邊欄位 -->
+      <div class="content" id="content"></div>
+    </div>
   </div>
 
   <script>
-    document.getElementById("ilpForm").addEventListener("submit", function(e){
-      e.preventDefault();
+    function login(){
+      const userId = document.getElementById("userId").value;
+      const role = document.getElementById("role").value;
 
-      // 先取得學習者填寫的內容
-      const formData = new FormData(e.target);
-      const data = {};
-      formData.forEach((value, key) => data[key] = value);
+      if(!userId){
+        alert("請輸入人事號");
+        return;
+      }
 
-      // 先組成送給 AI 的文字（目前先顯示，之後會串 Google Apps Script）
-      const promptText = `
-        學習者姓名：${data.name}
-        學習目標：${data.goal}
-        學習動機：${data.motivation}
-        學習策略與資源：${data.strategy}
-        可能遇到的困難：${data.difficulty}
-        評估方式與指標：${data.evaluation}
-        預計完成時間：${data.timeline}
+      // 模擬登入
+      document.getElementById("loginContainer").style.display = "none";
+      document.getElementById("mainContainer").style.display = "block";
+
+      if(role === "student"){
+        renderStudentUI(userId);
+      } else {
+        renderTeacherUI(userId);
+      }
+    }
+
+    function renderStudentUI(userId){
+      document.getElementById("sidebar").innerHTML = `
+        <h2>學生填寫區</h2>
+        <div class="section">
+          <label>學習目標</label>
+          <textarea rows="2"></textarea>
+          <label>學習動機</label>
+          <textarea rows="2"></textarea>
+          <label>策略</label>
+          <textarea rows="2"></textarea>
+          <label>可能困難</label>
+          <textarea rows="2"></textarea>
+          <label>評估方式</label>
+          <textarea rows="2"></textarea>
+          <label>時程</label>
+          <textarea rows="2"></textarea>
+          <button>送出並產生AI計畫</button>
+        </div>
       `;
 
-      // 顯示假回覆，之後會換成 AI 回傳
-      const resultBox = document.getElementById("resultBox");
-      const aiResult = document.getElementById("aiResult");
-      aiResult.innerHTML = `
-        <strong>姓名：</strong> ${data.name}<br>
-        <strong>學習目標：</strong> ${data.goal}<br>
-        <strong>學習動機：</strong> ${data.motivation}<br>
-        <strong>學習策略：</strong> ${data.strategy}<br>
-        <strong>可能困難：</strong> ${data.difficulty}<br>
-        <strong>評估方式：</strong> ${data.evaluation}<br>
-        <strong>預計完成：</strong> ${data.timeline}<br><br>
-        ✅ <em>之後這裡會顯示 AI 生成的完整計畫表！</em>
+      document.getElementById("content").innerHTML = `
+        <h2>AI 計畫 & 教師回饋</h2>
+        <div class="section">
+          <h3>本次 AI 生成計畫書</h3>
+          <p>(送出後這裡會顯示AI計畫)</p>
+        </div>
+        <div class="section">
+          <h3>AI 比較回饋</h3>
+          <p>(AI會分析上次與本次差異，送出後顯示)</p>
+        </div>
+        <div class="section">
+          <h3>教師回饋</h3>
+          <p>(老師補回饋後，這裡會顯示內容)</p>
+        </div>
       `;
-      resultBox.style.display = "block";
+    }
 
-      // 之後要串 Google Apps Script 後端，呼叫 ChatGPT API
-      console.log("準備送到後端的資料：", promptText);
-    });
+    function renderTeacherUI(userId){
+      document.getElementById("sidebar").innerHTML = `
+        <h2>老師回饋區</h2>
+        <div class="section">
+          <h3>需要回饋的學生列表</h3>
+          <ul>
+            <li><button onclick="viewStudent('S1234')">王小明 (版本3)</button></li>
+            <li><button onclick="viewStudent('S5678')">張小華 (版本2)</button></li>
+          </ul>
+        </div>
+      `;
+
+      document.getElementById("content").innerHTML = `
+        <h2>學生ILP & AI計畫</h2>
+        <div class="section">
+          <h3>學生ILP</h3>
+          <p>請選擇學生後顯示</p>
+        </div>
+        <div class="section">
+          <h3>AI 計畫 & 差異回饋</h3>
+          <p>請選擇學生後顯示</p>
+        </div>
+        <div class="section">
+          <h3>老師回饋</h3>
+          <textarea rows="3" placeholder="輸入你的回饋"></textarea>
+          <button>送出回饋</button>
+        </div>
+      `;
+    }
+
+    function viewStudent(studentId){
+      // 模擬顯示學生資料
+      document.getElementById("content").innerHTML = `
+        <h2>王小明 (版本3)</h2>
+        <div class="section">
+          <h3>學生ILP</h3>
+          <p>目標：精進臨床溝通技巧</p>
+          <p>動機：希望能與病患建立更好的關係</p>
+        </div>
+        <div class="section">
+          <h3>AI 計畫 & 差異回饋</h3>
+          <p>AI計畫書：...(假資料)</p>
+          <p>AI比較回饋：本次與上次相比，目標更明確...</p>
+        </div>
+        <div class="section">
+          <h3>老師回饋</h3>
+          <textarea rows="3" placeholder="輸入你的回饋"></textarea>
+          <button>送出回饋</button>
+        </div>
+      `;
+    }
   </script>
+
 </body>
 </html>
